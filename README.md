@@ -1,1 +1,0 @@
-# oriyukiakari.github.io

@@ -2,161 +2,116 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#212121">
 
-    <title>澪鸢 / OriyukiAkari - Akari.Fun</title>
-    <meta name="description" content="鸢の个人名片">
-    <meta name="keywords" content="澪鸢 OriyukiAkari 名片 个人网站 博客">
-    <link rel="apple-touch-icon-precomposed" href="./source/storage/avatar.jpg">
+  <title>澪鸢 / OriyukiAkari - Akari.Fun</title>
+  <meta name="description" content="鸢の个人名片">
+  <meta name="author" content="澪鸢 OriyukiAkari">
 
-    <link rel="stylesheet" type="text/css" href="./source/h.css">
-    <link rel="stylesheet" type="text/css" href="./source/akari.css">
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?d2e16b57e8db1b5b59b24e954fa2b23d";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="澪鸢 / OriyukiAkari - Akari.Fun">
+  <meta property="og:description" content="鸢の个人名片">
+  <meta property="og:url" content="https://akari.fun/">
+  <meta property="og:image" content="https://akari.fun/assets/img/avatar.jpg">
+
+  <link rel="icon" href="./assets/img/avatar.jpg">
+  <link rel="apple-touch-icon" href="./assets/img/avatar.jpg">
+  <link rel="stylesheet" href="./assets/css/icons.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="./assets/js/main.js" defer></script>
 </head>
 
 <body>
-    <div class="background">
-        <canvas id="startrack" aria-hidden="true"></canvas>
-        <div class="cover"></div>
-    </div>
-    <div class="main">
-        <div class="ch intro">
-            <div class="container">
-                <div class="hello">
-                    <!-- <img src="./source/img/avatar.jpg" class="avatar" /> -->
-                    <h1 id="slogan">...</h1>
-                </div>
-                <div class="readme">
-                
-                    <p>
-                        坚硬的代替了那些柔软的，清晰的取代了那些模糊的。<br> 那些滑溜溜和黏糊糊的东西，带你来到了世界的角落。
-                    </p>
-                    <p>
-                        <span class="b">你好，我是澪鸢<sup>@OriyukiAkari</sup>，18岁。</span><br> 一名计科的大学生，偶尔也会自己做些想做的产品。
-                        <br> 热爱科技、文化、未知的事情，享受人与人连接的热情和喜悦，对有趣的世界和发现了这里的你感到好奇。
-                    </p>
-                    <p>
-                        如果对我感兴趣，可以<a href="javascript:void(0)" onclick="rollOnce()">点击这里</a>Roll一个关于我的标签，<br> 在下面的社交媒体关注我，也欢迎直接发邮件找我聊聊。
-                    </p>
-                    <div class="roll-tag"></div>
-                    <p>希望能与你在比特之海的繁星之下相见！</p>
-                </div>
+  <div class="background" aria-hidden="true">
+    <canvas id="startrack"></canvas>
+  </div>
 
+  <main class="container">
+    <section class="section intro">
+      <h1 class="slogan" id="slogan">你好，<br>请多指教！</h1>
 
+      <div class="readme">
+        <p>
+          坚硬的代替了那些柔软的，清晰的取代了那些模糊的。<br>
+          那些滑溜溜和黏糊糊的东西，带你来到了世界的角落。
+        </p>
+        <p>
+          <strong>你好，我是澪鸢<sup>@OriyukiAkari</sup><span id="age"></span>。</strong><br>
+          一名计科的大学生，偶尔也会自己做些想做的产品。<br>
+          热爱科技、文化、未知的事情，享受人与人连接的热情和喜悦，对有趣的世界和发现了这里的你感到好奇。
+        </p>
+        <p>
+          如果对我感兴趣，可以<button type="button" class="text-link" id="roll-btn">点击这里</button>Roll一个关于我的标签，<br>
+          在下面的社交媒体关注我，也欢迎直接发邮件找我聊聊。
+        </p>
+        <div class="roll-tag" id="roll-tag" aria-live="polite" hidden></div>
+        <p>希望能与你在比特之海的繁星之下相见！</p>
+      </div>
 
-                <div class="find-me">
-                    <a class="item" href="https://twitter.com/OriyukiAkari" target="_blank" rel="noopener">
-                        <i class="neko-icon icon-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a class="item" href="https://t.me/OriyukiAkari" target="_blank" rel="noopener">
-                        <i class="neko-icon icon-telegram"></i>
-                        <span>Telegram</span>
-                    </a>
-                    <a class="item" href="https://github.com/OriyukiAkari" target="_blank" rel="noopener">
-                        <i class="neko-icon icon-github"></i>
-                        <span>Github</span>
-                    </a>
-                    <a class="item" href="mailto:i@mail.akari.fun">
-                        <i class="neko-icon icon-email"></i>
-                        <span>eMail</span>
-                    </a>
-                    <a class="item" href="https://steamcommunity.com/id/OriyukiAkari/" target="_blank" rel="noopener">
-                        <i class="neko-icon icon-steam"></i>
-                        <span>Steam</span>
-                    </a>
-                </div>
+      <ul class="social">
+        <li><a href="https://x.com/OriyukiAkari" target="_blank" rel="noopener" style="--accent:#66ccff" aria-label="Twitter"><i class="icon icon-twitter"></i><span class="label">Twitter</span></a></li>
+        <li><a href="https://t.me/OriyukiAkari" target="_blank" rel="noopener" style="--accent:#0088cc" aria-label="Telegram"><i class="icon icon-telegram"></i><span class="label">Telegram</span></a></li>
+        <li><a href="https://github.com/OriyukiAkari" target="_blank" rel="noopener" style="--accent:#f58930" aria-label="GitHub"><i class="icon icon-github"></i><span class="label">GitHub</span></a></li>
+        <li><a href="mailto:i@mail.akari.fun" style="--accent:#28a9e0" aria-label="Email"><i class="icon icon-email"></i><span class="label">eMail</span></a></li>
+        <li><a href="https://steamcommunity.com/id/OriyukiAkari/" target="_blank" rel="noopener" style="--accent:#f09199" aria-label="Steam"><i class="icon icon-steam"></i><span class="label">Steam</span></a></li>
+      </ul>
+    </section>
 
-            </div>
-        </div>
+    <section class="section">
+      <ul class="entries">
+        <li>
+          <a class="entry entry-square" href="https://blog.akari.fun/">
+            <span class="name">部落格</span>
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <linearGradient id="fade-square" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff" />
+                  <stop offset="1" stop-color="#fff" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <rect width="100" height="100" rx="10" fill="url(#fade-square)" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <span class="entry entry-triangle disabled" aria-disabled="true">
+            <span class="name">作品集（尚未开工）</span>
+            <svg viewBox="0 0 116 103" aria-hidden="true">
+              <defs>
+                <linearGradient id="fade-triangle" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff" />
+                  <stop offset="1" stop-color="#fff" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <path d="M49.34 5C53.19-1.67 62.81-1.67 66.66 5l47.63 82.5c3.85 6.67-.96 15-8.66 15H10.37c-7.7 0-12.51-8.33-8.66-15L49.34 5Z" fill="url(#fade-triangle)" />
+            </svg>
+          </span>
+        </li>
+        <li>
+          <button type="button" class="entry entry-rounded" id="friends-btn" aria-expanded="false" aria-controls="friends">
+            <span class="name">朋友们</span>
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <defs>
+                <linearGradient id="fade-rounded" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#fff" />
+                  <stop offset="1" stop-color="#fff" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="50" fill="url(#fade-rounded)" />
+            </svg>
+          </button>
+        </li>
+      </ul>
 
-        <div class="ch clear">
-            <div class="container">
-                <div class="enter-list">
-                    <a class="item" href="https://blog.akari.fun/">
-                        <div class="text">部落格</div>
-                        <div class="bg">
-                            <div class="square">
-                                <svg width="100" height="100" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<rect width="100" height="100" rx="10" fill="url(#grad-square)"/>
-									<defs>
-									<linearGradient id="grad-square" x1="50" y1="0" x2="50" y2="100" gradientUnits="userSpaceOnUse">
-									<stop stop-color="white"/>
-									<stop offset="1" stop-color="white" stop-opacity="0"/>
-									</linearGradient>
-									</defs>
-									</svg>
-                            </div>
-
-                        </div>
-                    </a>
-                    <a class="item disabled" aria-disabled="true">
-                        <div class="text">作品集（尚未开工）</div>
-                        <div class="bg">
-                            <div class="triangle">
-                                <svg width="116" height="103" preserveAspectRatio="xMidYMid meet" viewBox="0 0 116 103" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M49.3397 5.00001C53.1887 -1.66666 62.8113 -1.66667 66.6603 5L114.292 87.5C118.141 94.1667 113.329 102.5 105.631 102.5H10.3686C2.67061 102.5 -2.14065 94.1667 1.70835 87.5L49.3397 5.00001Z" fill="url(#grad-triangle)"/>
-									<defs>
-									<linearGradient id="grad-triangle" x1="58" y1="0.5" x2="58" y2="104" gradientUnits="userSpaceOnUse">
-									<stop stop-color="white"/>
-									<stop offset="1" stop-color="white" stop-opacity="0"/>
-									</linearGradient>
-									</defs>
-									</svg>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="item" href="javascript:void(0)" onclick="nav('friends')">
-                        <div class="text">朋友们（尚未开工）</div>
-                        <div class="bg">
-                            <div class="rounded">
-                                <svg width="100" height="100" preserveAspectRatio="xMidYMid meet" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<circle cx="50" cy="50" r="50" fill="url(#grad-rounded)"/>
-									<defs>
-									<linearGradient id="grad-rounded" x1="50" y1="0" x2="50" y2="100" gradientUnits="userSpaceOnUse">
-									<stop stop-color="white"/>
-									<stop offset="1" stop-color="white" stop-opacity="0"/>
-									</linearGradient>
-									</defs>
-									</svg>
-
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="gate ch gate-friends">
-        <div class="container links">
-            <div class="ch-content">
-                <div class="clear">
-                    <p class="placeholder">友链还在整理中，敬请期待～</p>
-                    <!-- 友链模板：
-                    <a href="https://example.com/" target="_blank" rel="noopener">
-                        <div class="item">
-                            <div class="avatar"><img src="./source/storage/xxx.jpg" alt="名字"></div>
-                            <div class="inner"><h5>名字</h5><p>一句话介绍</p></div>
-                        </div>
-                    </a>
-                    -->
-                </div>
-                <div class="clear" style="margin-top: 30px;">
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="./source/zepto.min.js"></script>
-    <script src="./source/page.js"></script>
+      <div class="friends" id="friends" hidden>
+        <ul class="friends-list" id="friends-list"></ul>
+        <p class="friends-empty" id="friends-empty" hidden>友链还在整理中，敬请期待～</p>
+      </div>
+    </section>
+  </main>
 </body>
-</html>
+
+</html>

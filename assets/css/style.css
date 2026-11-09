@@ -1,0 +1,478 @@
+/* ============================================================
+   Akari.Fun — 主样式
+   ============================================================ */
+
+:root {
+  --bg: #212121;
+  --card: #333;
+  --card-hover: #383838;
+  --text: #fff;
+  --text-dim: rgba(255, 255, 255, .6);
+  --radius: 10px;
+  --ease-out: cubic-bezier(.19, 1, .22, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 17px;
+  line-height: 2;
+  color: var(--text);
+  background-color: var(--bg);
+  padding: 0 5%;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(255, 255, 255, .08);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ---------- 背景星轨 ---------- */
+
+.background {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 120vh;
+  pointer-events: none;
+  z-index: -1;
+}
+
+#startrack {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+}
+
+.background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, var(--bg) 30%, rgba(33, 33, 33, 0) 100%);
+}
+
+/* ---------- 布局 ---------- */
+
+.container {
+  position: relative;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.section {
+  padding-bottom: 60px;
+  animation: fade-down 1s var(--ease-out) both;
+}
+
+.intro {
+  animation-duration: 3.5s;
+}
+
+/* ---------- 介绍 ---------- */
+
+.slogan {
+  padding: 5% 0;
+  font-size: 78px;
+  font-weight: 900;
+  letter-spacing: .2em;
+  line-height: 1.35;
+}
+
+.readme {
+  font-size: 18px;
+  letter-spacing: .2em;
+}
+
+.readme p {
+  margin-bottom: 1.8em;
+}
+
+.readme sup {
+  font-size: .76em;
+}
+
+.readme strong {
+  font-weight: bold;
+}
+
+.text-link {
+  position: relative;
+  display: inline-block;
+  margin: 0 5px;
+  letter-spacing: inherit;
+  line-height: 1.3;
+  vertical-align: baseline;
+}
+
+.text-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 95%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, .6);
+  transition: .1s all;
+}
+
+.text-link:hover::after,
+.text-link:focus-visible::after {
+  height: 5px;
+  background-color: #fff;
+}
+
+/* ---------- Roll 标签 ---------- */
+
+.roll-tag {
+  position: relative;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.roll-tag span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 10px 20px;
+  white-space: nowrap;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: 0 0 20px rgba(0, 0, 0, .28);
+  animation: tag-in .1s ease-in-out;
+}
+
+.roll-tag span::before {
+  content: "#";
+  margin-right: 5px;
+}
+
+.roll-tag span.leaving {
+  animation: tag-out .1s ease-in-out forwards;
+}
+
+/* ---------- 社交链接 ---------- */
+
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 20px;
+  list-style: none;
+}
+
+.social a {
+  position: relative;
+  display: block;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  transition: .2s transform;
+}
+
+.social a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--accent, #555);
+  transition: .2s all;
+  z-index: 0;
+}
+
+.social .icon {
+  position: relative;
+  display: inline-block;
+  font-size: 26px;
+  z-index: 1;
+  transition: .3s transform;
+}
+
+.social .label {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0;
+  z-index: 1;
+  transition: .3s all;
+}
+
+.social a:hover,
+.social a:focus-visible {
+  transform: translateY(-3px);
+}
+
+.social a:hover::after,
+.social a:focus-visible::after {
+  height: 100%;
+  border-radius: var(--radius);
+}
+
+.social a:hover .icon,
+.social a:focus-visible .icon {
+  transform: translateY(-10px);
+}
+
+.social a:hover .label,
+.social a:focus-visible .label {
+  opacity: .6;
+  bottom: 16px;
+}
+
+/* ---------- 入口卡片 ---------- */
+
+.entries {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4%;
+  list-style: none;
+}
+
+.entry {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  text-align: left;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  transition: .2s all;
+}
+
+.entry:not(.disabled):hover,
+.entry:not(.disabled):focus-visible {
+  background-color: var(--card-hover);
+  animation: tilt 1s cubic-bezier(.315, .605, .375, .925) forwards;
+}
+
+.entry.disabled {
+  cursor: default;
+  opacity: .6;
+}
+
+.entry .name {
+  position: absolute;
+  left: 8%;
+  bottom: 10%;
+  line-height: 1.5;
+}
+
+.entry svg {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 160px;
+  height: 160px;
+  opacity: .05;
+  animation: spin 20s linear infinite;
+}
+
+.entry-square svg { animation-duration: 15s; }
+.entry-triangle svg { width: 180px; height: 180px; animation-duration: 30s; }
+
+/* ---------- 友链 ---------- */
+
+.friends {
+  margin-top: 60px;
+  padding: 20px 2%;
+  background-color: var(--card);
+  border-radius: var(--radius);
+}
+
+.friends-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  list-style: none;
+}
+
+.friend {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 5px;
+  opacity: .85;
+  transition: .2s all;
+}
+
+.friend:hover,
+.friend:focus-visible {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, .25);
+  box-shadow: 0 3px 20px rgba(0, 0, 0, .28);
+  transform: translateY(-5px);
+}
+
+.friend img {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #353535;
+}
+
+.friend .info {
+  min-width: 0;
+  line-height: 1.6;
+}
+
+.friend .info strong,
+.friend .info small {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.friend .info strong {
+  font-weight: normal;
+}
+
+.friend .info small {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.friends-empty {
+  color: var(--text-dim);
+  letter-spacing: .1em;
+}
+
+/* ---------- 动画 ---------- */
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-50px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes tag-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tag-out {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes tilt {
+  0%   { transform: perspective(1600px) rotateX(0) rotateY(0) translateZ(0); }
+  16%  { transform: perspective(1600px) rotateX(10deg) rotateY(5deg) translateZ(32px); }
+  100% { transform: perspective(1600px) rotateX(0) rotateY(0) translateZ(65px) translateY(-5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (min-width: 1400px) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 15px;
+  }
+
+  .section {
+    padding: 20px 0;
+  }
+
+  .slogan {
+    font-size: 40px;
+  }
+
+  .readme {
+    font-size: 15px;
+  }
+
+  .roll-tag {
+    height: auto;
+    min-height: 60px;
+  }
+
+  .roll-tag span {
+    position: relative;
+    display: inline-block;
+    white-space: normal;
+  }
+
+  .roll-tag span.leaving {
+    display: none;
+  }
+
+  .entries {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .entry {
+    height: 100px;
+  }
+
+  .friends-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .friend {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .friend img {
+    width: 40px;
+    height: 40px;
+  }
+}

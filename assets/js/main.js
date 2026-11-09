@@ -7,9 +7,9 @@
 
 const CONFIG = {
   // 生日（YYYY-MM-DD），用来自动计算年龄；留空则不显示年龄
-  birthday: '2003-01-01',
+  birthday: '',
 
-  // 首页大标题，随机显示一条（<br> 表示换行）
+  // 首页大标题，随机显示一条（<br> 表示换行，会按 HTML 插入，只放自己写的内容）
   slogans: [
     '希望能成为<br>有趣的人！',
     '给时光以生命，<br>给岁月以文明。',
@@ -250,14 +250,15 @@ function startTrack() {
 
   start();
 
-  // 宽度变化时重建；手机滚动时地址栏伸缩只改变高度，忽略以免星轨被清空
-  let lastWidth = canvas.offsetWidth;
+  // 尺寸变化时重建，避免星空被拉伸。
+  // 手机滚动时地址栏伸缩会让高度小幅变化，这种情况忽略，免得星轨被清空。
   let timer = null;
   window.addEventListener('resize', () => {
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if (canvas.offsetWidth === lastWidth) return;
-      lastWidth = canvas.offsetWidth;
+      const nw = canvas.offsetWidth;
+      const nh = canvas.offsetHeight;
+      if (nw === w && Math.abs(nh - h) < h * 0.25) return;
       start();
     }, 250);
   });

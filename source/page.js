@@ -3,139 +3,96 @@ window.requestAnimFrame=function(){return window.requestAnimationFrame||window.w
 
 $(function(){
 
-  var cf = document.createElement("canvas");
   var c = document.getElementById('startrack');
-
-  let cw, ch;
-
-  c.width = cf.width = cw = c.offsetWidth;
-  c.height = cf.height = ch = c.offsetHeight;
-  var longside = Math.max(cw,ch);
-  cf.width = longside * 2.6
-  cf.height = longside * 2.6
-
+  if (!c || !c.getContext) return;
   var ctx = c.getContext('2d');
+  var cf = document.createElement("canvas");
   var cftx = cf.getContext('2d');
 
+  // 缓存画布的像素上限：原来是长边 × 2.6，4K 屏上会到 1 万像素见方（几百 MB 显存），
+  // 移动端 Safari 直接画不出来。超过上限就缩小绘制、放大贴图。
+  var MAX_CACHE = 4096;
+  var STAR_COUNT = 5000; // 原来 20000 颗里有 3/4 落在画布外，实际可见的约 5000 颗
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ctx.beginPath(); 
-  // ctx.rect(0, 0,  cw, ch); 
-  // ctx.fillStyle='rgba(0,255,0,.1)'; 
-  // ctx.closePath(); 
-  // ctx.fill();
-
-  // cftx.beginPath(); 
-  // cftx.rect(0, 0,  cf.width, cf.height); 
-  // cftx.fillStyle='rgba(255,255,255,.1)'; 
-  // cftx.strokeStyle='rgba(255,255,255,.1)'; 
-  // cftx.closePath(); 
-  // cftx.stroke();
-
-
-  var centerX = cw;
-  var centerY = 0//-ch;
-  var stars = [];
-  var drawTimes = 0;
-
-  ctx.fillStyle = "rgba(21,21,21,1)";
-  ctx.fillRect(0,0,cw,ch);
-
-  ctx.lineCap = 'round';
+  var cw, ch, longside, cacheSize, cacheScale, drawTimes;
 
   function rand(Min,Max){
-        var Range = Max - Min;
-        var Rand = Math.random();
-        var num = Min + Math.round(Rand * Range);
-        return num;
-  }
-
-  function createStar(){
-    stars.push({
-      x: rand(-cf.width,cf.width),
-      y: rand(-cf.height, cf.height),
-      size: 1.2,
-      color: randomColor(),
-    })
+    return Min + Math.round(Math.random() * (Max - Min));
   }
 
   function randomColor(){
-    var r = rand(120,255);
-    var g = rand(120,255);
-    var b = rand(120,255);
-    var a = rand(30,100)/100;
-    //var a = 1;
-    return "rgba("+r+","+g+","+b+","+a+")";
+    return "rgba("+rand(120,255)+","+rand(120,255)+","+rand(120,255)+","+rand(30,100)/100+")";
   }
 
-  function drawStar(){
-    var count = stars.length;
-    while(count--){
-      var cs = stars[count];
-      cftx.beginPath(); 
-      cftx.arc(cs.x, cs.y, cs.size, 0,Math.PI*2,true); 
-      cftx.fillStyle=cs.color; 
-      cftx.closePath(); 
+  function setup(){
+    c.width = cw = c.offsetWidth;
+    c.height = ch = c.offsetHeight;
+    longside = Math.max(cw, ch);
+
+    var logical = Math.ceil(longside * 2.6);
+    cacheSize = Math.min(logical, MAX_CACHE);
+    cacheScale = logical / cacheSize; // 贴图时的放大倍数
+    cf.width = cf.height = cacheSize;
+
+    // 预先把星星画到缓存画布上
+    cftx.clearRect(0, 0, cacheSize, cacheSize);
+    var size = Math.max(0.6, 1.2 / cacheScale);
+    for (var i = 0; i < STAR_COUNT; i++) {
+      cftx.beginPath();
+      cftx.arc(rand(0, cacheSize), rand(0, cacheSize), size, 0, Math.PI*2, true);
+      cftx.fillStyle = randomColor();
       cftx.fill();
     }
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = "rgba(21,21,21,1)";
+    ctx.fillRect(0, 0, cw, ch);
+    ctx.lineCap = 'round';
+    ctx.translate(cw, 0); // 以右上角为旋转中心
+    drawTimes = 0;
   }
 
   function drawfromCache(){
-    ctx.drawImage(cf, -cf.width/2,-cf.height/2);
+    var d = cacheSize * cacheScale;
+    ctx.drawImage(cf, -d/2, -d/2, d, d);
   }
 
   function loop(){
-
-    drawfromCache()
-    
+    drawfromCache();
     drawTimes++;
-
-    if(drawTimes > 400 ){
-      if(drawTimes % 8==0){
-        ctx.fillStyle = 'rgba(0,0,0,.04)';
-        ctx.fillRect(-(longside*3),-(longside*3),longside*6,longside*6);
-      }
+    if (drawTimes > 400 && drawTimes % 8 == 0) {
+      ctx.fillStyle = 'rgba(0,0,0,.04)';
+      ctx.fillRect(-(longside*3), -(longside*3), longside*6, longside*6);
     }
-    rotateCanvas(0.025);
-
+    ctx.rotate(0.025 * Math.PI / 180);
   }
-
-  function rotateCanvas(deg){
-    ctx.rotate(deg*Math.PI/180);
-  }
-
-  var count = 20000;
-  while(count--){
-      createStar();
-  }
-  drawStar();
-
-  var x = centerX;
-  var y = centerY;
-  ctx.translate(x,y);
 
   function fireAnimate() {
-      requestAnimFrame( fireAnimate );
-      loop();
+    loop();
+    requestAnimFrame(fireAnimate);
   }
 
-  fireAnimate();
-
-  function changeStar(){
-    loop = function(){
-      drawfromCache()
-    
-    drawTimes++;
-
-    if(drawTimes > 150 ){
-      if(drawTimes % 8==0){
-        ctx.fillStyle = 'rgba(0,0,0,.04)';
-        ctx.fillRect(-(longside*3),-(longside*3),longside*6,longside*6);
-      }
-    }
-      rotateCanvas(random(1,100));
-    }
+  setup();
+  if (reduceMotion) {
+    drawfromCache(); // 用户偏好减少动画时只画一帧静态星空
+  } else {
+    fireAnimate();
   }
-  
+
+  // 窗口尺寸变化后重建画布，避免星空被拉伸
+  var resizeTimer = null, lastW = cw;
+  $(window).on('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      // 手机滚动时地址栏伸缩只改高度，忽略，免得星轨被清空
+      if (c.offsetWidth === lastW && Math.abs(c.offsetHeight - ch) < 200) return;
+      lastW = c.offsetWidth;
+      setup();
+      if (reduceMotion) drawfromCache();
+    }, 250);
+  });
+
 })
 
 
@@ -249,4 +206,4 @@ function nav (page){
     default:
       break;
   }
-}
+}

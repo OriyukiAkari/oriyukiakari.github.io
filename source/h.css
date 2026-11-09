@@ -577,6 +577,23 @@ ul.skill li .progress div {
     animation: index-link-active 1s cubic-bezier(0.315, 0.605, 0.375, 0.925) forwards;
 }
 
+.enter-list .item.disabled {
+    cursor: default;
+    opacity: .6;
+}
+
+.enter-list .item.disabled:hover {
+    background-color: #333;
+    transform: none;
+    animation: none;
+}
+
+.gate .links .placeholder {
+    padding: 20px 0;
+    color: rgba(255, 255, 255, .6);
+    letter-spacing: .1em;
+}
+
 .enter-list .item .text {
     position: absolute;
     bottom: 10%;
@@ -780,4 +797,4 @@ ul.skill li .progress div {
     .footer p {
         letter-spacing: .2em;
     }
-}
+}

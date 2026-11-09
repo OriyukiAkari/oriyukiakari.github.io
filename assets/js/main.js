@@ -7,7 +7,7 @@
 
 const CONFIG = {
   // 生日（YYYY-MM-DD），用来自动计算年龄；留空则不显示年龄
-  birthday: '',
+  birthday: '2006-03-23',
 
   // 首页大标题，随机显示一条（<br> 表示换行，会按 HTML 插入，只放自己写的内容）
   slogans: [
